@@ -90,8 +90,11 @@ Câu trả lời là được, nhưng nó thực sự quá phức tạp triển 
 ![enter image description here](https://i.ibb.co/Z6dq7xN/featurecontent.png)
 
 ## Sử dụng plugin cho các feature có chung mục đích phát triển
+
 Đầu tiên chúng ta quan sát các core feature như hình dưới
+
 ![enter image description here](https://i.ibb.co/NYYBDMk/package.png)
+
 Hầu hết các gói core này đều cung cấp 1 chức năng gì đó dùng chung cho các feature, ví dụ core-ui cung cấp các UI dùng chung, core-database cung cấp loại database như room, sqlite..etc, core-datastore cung cấp nơi lưu cấu hình, config...etc và đều được sử dụng tại các feature. Nói đơn giản đây là source base của feature trong kiến trúc multi-feature. 
 Để tránh việc config của feature quá rườm rà và để optimize job build chúng ta sử dụng thêm plugin, các feature sử dụng plugin này sẽ tuân theo một khung do plugin quy dịnh. 
 
