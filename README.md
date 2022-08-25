@@ -96,9 +96,11 @@ Hầu hết các gói core này đều cung cấp 1 chức năng gì đó dùng 
 Để tránh việc config của feature quá rườm rà và để optimize job build chúng ta sử dụng thêm plugin, các feature sử dụng plugin này sẽ tuân theo một khung do plugin quy dịnh. 
 
 Trước khi sử dụng plugin
+
 ![enter image description here](https://i.ibb.co/DtDybjj/without-Plugin.png)
 
 Sau khi sử dụng plugin
+
 ![enter image description here](https://i.ibb.co/865Ynh0/with-Plugin.png)
 
 Các khai báo rườm rà như target, compile, dependency đã include và xử lý trong plugin, việc khai báo sẽ trở nên rất gọn gàng như trên
