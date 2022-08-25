@@ -11,23 +11,24 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
-    companion object{
+    companion object {
         const val POPULAR = 1
         const val NOW_PLAYING = 2
         const val TOP_RATE = 3
         const val UP_COMMING = 4
     }
-    @Query(value = "SELECT * FROM movies WHERE type = '$POPULAR'")
+
+    @Query(value = "SELECT * FROM movies WHERE type = '$POPULAR' Order by id desc")
     fun getPolularMovieEntitiesStream(): Flow<List<MovieEntity>>
+
+    @Query(value = "SELECT * FROM movies WHERE type = '$NOW_PLAYING' Order by id desc")
+    fun getNowPlayingEntitiesStream(): Flow<List<MovieEntity>>
 
     @Query(value = "SELECT * FROM movies WHERE type = '$TOP_RATE'")
     fun getTopRateMovieEntitiesStream(): Flow<List<MovieEntity>>
 
     @Query(value = "SELECT * FROM movies WHERE type = '$UP_COMMING'")
     fun getUpCommingMovieEntitiesStream(): Flow<List<MovieEntity>>
-
-    @Query(value = "SELECT * FROM movies WHERE type = '$NOW_PLAYING'")
-    fun getNowPlayingEntitiesStream(): Flow<List<MovieEntity>>
 
     @Query(
         value = """
@@ -36,8 +37,10 @@ interface MovieDao {
     """
     )
     fun getMovieEntity(id: String): Flow<MovieEntity>
+
     @Query(value = "SELECT * FROM movies")
     fun getMovieEntitiesStream(): Flow<List<MovieEntity>>
+
     @Query(
         value = """
         SELECT * FROM movies
@@ -48,8 +51,7 @@ interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertOrIgnoreMovie(movieEntities: List<MovieEntity>): List<Long>
-    @Insert
-    suspend fun insertOrIgnoreMovie1(movieEntities: List<MovieEntity>): List<Long>
+
     @Update
     suspend fun updateMovies(entities: List<MovieEntity>)
 
@@ -73,6 +75,7 @@ interface MovieDao {
         """
     )
     suspend fun deleteMovie(ids: List<String>)
+
     @Query(
         value = """
             SELECT COUNT(*) FROM movies

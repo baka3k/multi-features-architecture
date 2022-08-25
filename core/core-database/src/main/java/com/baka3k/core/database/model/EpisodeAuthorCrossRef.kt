@@ -19,12 +19,6 @@ import androidx.room.Index
             childColumns = ["episode_id"],
             onDelete = ForeignKey.CASCADE
         ),
-        ForeignKey(
-            entity = AuthorEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["author_id"],
-            onDelete = ForeignKey.CASCADE
-        ),
     ],
     indices = [
         Index(value = ["episode_id"]),

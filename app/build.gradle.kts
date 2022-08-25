@@ -3,7 +3,7 @@ import com.baka3k.build.Flavor
 
 plugins {
     id("hi.android.application")
-//    id("hi.android.application.compose")
+    id("hi.android.application.compose")
 //    id("hi.android.application.jacoco")
     kotlin("kapt")
 //    id("jacoco")
@@ -29,8 +29,8 @@ android {
         val release by getting {
             isMinifyEnabled = true
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("debug")
         }
@@ -75,20 +75,24 @@ dependencies {
     implementation(libs.coil.kt.svg)
 
     implementation(libs.hilt.android)
-    implementation(project(mapOf("path" to ":core:core-model")))
+
     kapt(libs.hilt.compiler)
     kaptAndroidTest(libs.hilt.compiler)
 
 
     api(libs.androidx.hilt.navigation.compose)
     api(libs.androidx.navigation.compose)
-//    implementation(project(path = ":code:core-ui"))
+
+    implementation(project(path = ":core:core-model"))
+    implementation(project(path = ":core:core-ui"))
     implementation(project(path = ":core:core-network"))
     implementation(project(path = ":core:core-data"))
     implementation(project(path = ":core:core-common"))
-    implementation(project(path = ":features:feature-movie"))
+    implementation(project(path = ":core:core-navigation"))
 
-//    implementation(libs.kotlinx.serialization.json)
+    implementation(project(path = ":features:feature-movie-compose"))
+    implementation(project(path = ":features:feature-movie"))
+    implementation(project(path = ":features:feature-moviedetail"))
 
 //    implementation(project(path = ":core-ui"))
 //    implementation(project(path = ":core-navigation"))
@@ -98,4 +102,8 @@ dependencies {
 //    implementation(project(path = ":feature-author"))
 //    implementation(project(path = ":feature-movies"))
 //    implementation(project(path = ":sync"))
+
+    implementation(libs.androidx.window.manager)
+    implementation(libs.androidx.compose.material3.windowSizeClass)
+    implementation(libs.androidx.constraintlayout.compose)
 }

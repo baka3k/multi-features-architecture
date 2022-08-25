@@ -10,6 +10,6 @@ buildscript {
         classpath(libs.kotlin.serializationPlugin)
         classpath(libs.hilt.gradlePlugin)
         classpath(libs.secrets.gradlePlugin)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
+        classpath(libs.androidx.navigation.plugin.safeargs)
     }
 }

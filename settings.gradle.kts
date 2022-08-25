@@ -32,15 +32,6 @@ include(":core:core-common")
 include(":core:core-database")
 include(":core:core-ui")
 
+include(":features:feature-movie-compose")
 include(":features:feature-movie")
-
-//include(":features:feature-movie")
-//
-//include(":sync")
-//
-//include(":feature-foryou")
-//include(":feature-interests")
-//include(":feature-topic")
-//include(":feature-author")
-//include(":feature-movies")
-
+include(":features:feature-moviedetail")

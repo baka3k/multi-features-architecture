@@ -1,6 +1,7 @@
 package com.baka3k.core.data.repository
 
 import android.util.Log
+import com.baka3k.core.common.logger.Logger
 import com.baka3k.core.common.result.Result
 import com.baka3k.core.data.model.asEntity
 import com.baka3k.core.data.model.asNowPlayingEntity
@@ -9,9 +10,11 @@ import com.baka3k.core.data.model.asPopularEntity
 import com.baka3k.core.data.model.asPopularMovie
 import com.baka3k.core.data.model.asUpStream
 import com.baka3k.core.database.dao.MovieDao
+import com.baka3k.core.database.model.MovieEntity
 import com.baka3k.core.database.model.asExternalModel
 import com.baka3k.core.datastore.HiPreferencesDataSource
 import com.baka3k.core.model.Movie
+import com.baka3k.core.model.PagingInfo
 import com.baka3k.core.network.datasource.MovieNetworkDataSource
 import com.baka3k.core.network.model.NetworkMovie
 import kotlinx.coroutines.flow.Flow
@@ -43,16 +46,12 @@ class MovieRepositoryImpl @Inject constructor(
             data.map { it.asExternalModel() }
         }
 
-    override fun getMovieStream(): Flow<List<Movie>> {
-        Log.d(TAG, "#getMovieStream()")
-        val dataLocal = movieDao.getMovieEntitiesStream().map { data ->
-            data.map { it.asExternalModel() }
-        }
-        return dataLocal
+    override fun getMovieStream(idMovie: String): Flow<Movie> {
+        return movieDao.getMovieEntity(idMovie).map(MovieEntity::asExternalModel)
     }
 
-    override suspend fun loadMorePopular(page: Int): Result<List<Movie>> {
-        return when (val response = network.getPopularMovie(page)) {
+    override suspend fun loadMorePopular(pageinfo: PagingInfo): Result<List<Movie>> {
+        return when (val response = network.getPopularMovie(pageinfo)) {
             is Result.Success -> {
                 val data = response.data
                 movieDao.upsertMovie(data.map(NetworkMovie::asPopularEntity))
@@ -67,8 +66,8 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun loadMoreNowPlaying(page: Int): Result<List<Movie>> {
-        return when (val response = network.getNowPlayingMovie(page)) {
+    override suspend fun loadMoreNowPlaying(pageinfo: PagingInfo): Result<List<Movie>> {
+        return when (val response = network.getNowPlayingMovie(pageinfo)) {
             is Result.Success -> {
                 val data = response.data
                 movieDao.upsertMovie(data.map(NetworkMovie::asNowPlayingEntity))
@@ -82,6 +81,7 @@ class MovieRepositoryImpl @Inject constructor(
             }
         }
     }
+
 
     companion object {
         private const val TAG = "MovieRepositoryImpl"

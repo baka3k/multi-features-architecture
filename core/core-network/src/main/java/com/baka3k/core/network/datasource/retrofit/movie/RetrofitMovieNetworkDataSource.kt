@@ -1,12 +1,13 @@
 package com.baka3k.core.network.datasource.retrofit.movie
 
 import com.baka3k.core.common.result.Result
-import com.baka3k.core.model.Movie
+import com.baka3k.core.model.PagingInfo
 import com.baka3k.core.network.BuildConfig
 import com.baka3k.core.network.datasource.MovieNetworkDataSource
 import com.baka3k.core.network.model.NetworkMovie
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.coroutines.delay
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -34,27 +35,27 @@ class RetrofitMovieNetworkDataSource @Inject constructor(
         .build()
         .create(RetrofitMovieNetworkApi::class.java)
 
-    override suspend fun getPopularMovie(page: Int): Result<List<NetworkMovie>> {
+    override suspend fun getPopularMovie(pagingInfo: PagingInfo): Result<List<NetworkMovie>> {
         return com.baka3k.core.common.result.runCatching {
-            networkApi.getPopularMovie(page = page).results
+            networkApi.getPopularMovie(page = pagingInfo.page).results
         }
     }
 
-    override suspend fun getTopRateMovie(page: Int): Result<List<NetworkMovie>> {
+    override suspend fun getTopRateMovie(pagingInfo: PagingInfo): Result<List<NetworkMovie>> {
         return com.baka3k.core.common.result.runCatching {
-            networkApi.getTopRateMovie(page = page).results
+            networkApi.getTopRateMovie(page = pagingInfo.page).results
         }
     }
 
-    override suspend fun getUpCommingMovie(page: Int): Result<List<NetworkMovie>> {
+    override suspend fun getUpCommingMovie(pagingInfo: PagingInfo): Result<List<NetworkMovie>> {
         return com.baka3k.core.common.result.runCatching {
-            networkApi.getUpCommingMovie(page = page).results
+            networkApi.getUpCommingMovie(page = pagingInfo.page).results
         }
     }
 
-    override suspend fun getNowPlayingMovie(page: Int): Result<List<NetworkMovie>> {
+    override suspend fun getNowPlayingMovie(pagingInfo: PagingInfo): Result<List<NetworkMovie>> {
         return com.baka3k.core.common.result.runCatching {
-            networkApi.getNowPlayingMovie(page = page).results
+            networkApi.getNowPlayingMovie(page = pagingInfo.page).results
         }
     }
 }

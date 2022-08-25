@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.baka3k.core.common.network.Dispatcher
 import com.baka3k.core.common.network.HiDispatchers
 import com.baka3k.core.common.result.Result
+import com.baka3k.core.model.PagingInfo
 import com.baka3k.core.network.datasource.MovieNetworkDataSource
 import com.baka3k.core.network.model.NetworkChangeList
 import com.baka3k.core.network.model.NetworkMovie
@@ -23,7 +24,7 @@ class FakeMovieNetworkDataSource @Inject constructor(
     @Dispatcher(HiDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
     private val networkJson: Json
 ) : MovieNetworkDataSource {
-    override suspend fun getPopularMovie(page: Int): Result<List<NetworkMovie>> {
+    override suspend fun getPopularMovie(pagingInfo: PagingInfo): Result<List<NetworkMovie>> {
         return withContext(ioDispatcher) {
             val networkMovieResponse =
                 networkJson.decodeFromString(FakeData.movieData) as NetworkMovieResponse
@@ -31,7 +32,7 @@ class FakeMovieNetworkDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getTopRateMovie(page: Int): Result<List<NetworkMovie>> {
+    override suspend fun getTopRateMovie(pagingInfo: PagingInfo): Result<List<NetworkMovie>> {
         return withContext(ioDispatcher) {
             val networkMovieResponse =
                 networkJson.decodeFromString(FakeData.movieData) as NetworkMovieResponse
@@ -39,7 +40,7 @@ class FakeMovieNetworkDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getUpCommingMovie(page: Int): Result<List<NetworkMovie>> {
+    override suspend fun getUpCommingMovie(pagingInfo: PagingInfo): Result<List<NetworkMovie>> {
         return withContext(ioDispatcher) {
             val networkMovieResponse =
                 networkJson.decodeFromString(FakeData.movieData) as NetworkMovieResponse
@@ -48,7 +49,7 @@ class FakeMovieNetworkDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getNowPlayingMovie(page: Int): Result<List<NetworkMovie>> {
+    override suspend fun getNowPlayingMovie(pagingInfo: PagingInfo): Result<List<NetworkMovie>> {
         return withContext(ioDispatcher) {
             val networkMovieResponse =
                 networkJson.decodeFromString(FakeData.movieData) as NetworkMovieResponse

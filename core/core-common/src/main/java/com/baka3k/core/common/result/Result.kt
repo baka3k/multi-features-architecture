@@ -1,6 +1,5 @@
 package com.baka3k.core.common.result
 
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -16,17 +15,15 @@ sealed interface Result<out T> {
 fun <T> Flow<T>.asResult(): Flow<Result<T>> {
     return this
         .map<T, Result<T>> {
-            Log.d("pppp","Success")
             Result.Success(it)
         }.onEmpty {
-            Log.d("pppp","onEmpty")
         }
         .onStart {
-            Log.d("pppp","onStart")
             emit(Result.Loading)
         }
         .catch { emit(Result.Error(it)) }
 }
+
 inline fun <R> runCatching(block: () -> R): Result<R> {
     return try {
         Result.Success(block())

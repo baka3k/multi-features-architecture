@@ -4,20 +4,27 @@ plugins {
     id("hi.android.library.jacoco")
     id("hi.spotless")
 }
-
+android {
+    buildFeatures {
+        viewBinding = true
+    }
+}
 dependencies {
-    implementation(project(":core:core-model"))
-
+//    implementation(project(":core:core-model"))
+    implementation(libs.androidx.compose.material3.windowSizeClass)
+    implementation(libs.androidx.window.manager)
     implementation(libs.androidx.core.ktx)
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.androidx.appcompat)
 
+    implementation(libs.androidx.recyclerview)
     // TODO : Remove these dependency once we upgrade to Android Studio Dolphin b/228889042
-    // These dependencies are currently necessary to render Compose previews
-    debugImplementation(libs.androidx.fragment)
-    debugImplementation(libs.androidx.lifecycle.viewModelCompose)
-    debugImplementation(libs.androidx.savedstate.ktx)
+//    // These dependencies are currently necessary to render Compose previews
+//    debugImplementation(libs.androidx.fragment)
+//    debugImplementation(libs.androidx.lifecycle.viewModelCompose)
+//    debugImplementation(libs.androidx.savedstate.ktx)
 
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)
@@ -31,4 +38,5 @@ dependencies {
 
     api(libs.androidx.fragment)
     api(libs.androidx.fragment.ktx)
+    api(libs.androidx.compose.material3.windowSizeClass)
 }

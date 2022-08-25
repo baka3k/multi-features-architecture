@@ -2,6 +2,7 @@ package com.baka3k.core.data.repository
 
 import com.baka3k.core.common.result.Result
 import com.baka3k.core.model.Movie
+import com.baka3k.core.model.PagingInfo
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
@@ -9,10 +10,9 @@ interface MovieRepository {
     fun getNowPlayingMovieStream(): Flow<List<Movie>>
     fun getTopRateMovieStream(): Flow<List<Movie>>
     fun getUpCommingMovieStream(): Flow<List<Movie>>
+    fun getMovieStream(idMovie: String): Flow<Movie>
 
-    // just for test
-    fun getMovieStream(): Flow<List<Movie>>
+    suspend fun loadMorePopular(pagingConfig: PagingInfo): Result<List<Movie>>
+    suspend fun loadMoreNowPlaying(pagingConfig: PagingInfo): Result<List<Movie>>
 
-    suspend fun loadMorePopular(page: Int): Result<List<Movie>>
-    suspend fun loadMoreNowPlaying(page: Int): Result<List<Movie>>
 }
