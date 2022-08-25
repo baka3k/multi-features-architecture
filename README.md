@@ -1,8 +1,11 @@
 
 
 Clean Architecture là một cách thức tương đối tuyệt vời để triển khai các dự án, cho đến một ngày mình nhận ra với một số dòng dự án, nó quá phức tạp, tốn kém(về mặt effort cần thiết bỏ ra) khi áp dụng cho các ứng dụng nhiều module, nhiều feature. 
+
 Khi ứng dụng tăng lên đến 80-90 features/modules hoặc hơn thế nữa chẳng hạn, hãy thực sự nghiêm túc suy nghĩ về vấn đề này.
+
 Với các ứng dụng ko thiên về business logic, ví dụ như các ứng dụng client server đơn thuần, nhiều screen flow, nhiều feature thêm vào nhiều module cắm thêm.. Clean architecture tuy có lợi cho phase maintain nhưng lại lấy đi tương đối effort trong phase development. 
+
 Và mình cần tìm một giải pháp khác cân bằng hơn, tất nhiên, ko có viên đạn bạc nào, mô hình nào cũng có điểm mạnh và điểm yếu. Chúng ta đơn giản chỉ là lựa chọn thứ phù hợp cho dự án của mình - just only
 
 Có 1 số điểm chúng ta suy nghĩ kỹ, và tìm ra phương án giải quyết trước khi thực sự quyết định dựng lên một high level design hoặc chọn một architecture pattern nào đó
