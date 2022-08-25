@@ -43,6 +43,7 @@ navController.graph = navController.createGraph
 		}
 ```
 **2. Sử dụng deep link khi chuyển đổi giữa các screen**
+
 Với cách sử dụng Navigation component thông thường, để chuyển đổi các screen thì cần biết ID và params gửi đến screen tiếp theo, nhưng với mô hình multi-features, các screen được nằm ở các features khác nhau và hoàn toàn ko biết đến các screen khác nên trường hợp này chúng ta sử dụng **[deeplink](https://developer.android.com/guide/navigation/navigation-deep-link)** để chuyển đổi các màn hình
 
 Khai báo khởi tạo NavGraph & deeplink [(Kotlin DSL)](https://developer.android.com/guide/navigation/navigation-kotlin-dsl)
@@ -71,6 +72,7 @@ var uri = "android-app://com.baka3k.test.feature.moviedetail.router/moviedetailf
 findNavController().navigate(uri)
 ```
 ## Các feature/module làm việc với nhau như thế nào?
+
 Rule **bắt buộc** cần tuân theo đó là các feature/module sẽ **không** được phép làm việc trực tiếp với nhau, vd: feature movie không làm việc trực tiếp với feature actor, feature chuyển tiền ko làm việc trực tiếp với feature xem danh sách giao dịch..etc
 Việc tuân theo rule này sẽ khiến các feature/module có thể tách rời, đảm bảo Loose Coupling, trong quá trình maintain khả năng thay thế feature A thành feature A' , hoặc việc xóa bớt các features  ko dùng sẽ trở nên dễ dàng hơn.
 
@@ -79,13 +81,17 @@ Câu hỏi này xuất phát từ một tình huống thực tế, khi 2 feature
 Ví dụ: khi ở feature 'MovieDetail' cần gọi chức năng 'sửa tên diễn viên' nằm trong feature 'Actor', và feature 'Actor' lại cần gọi chức năng 'sửa tên phim' nằm trong feature 'MovieDetail' chả hạn - khi đó chúng ta xuất hiện tình huống phụ thuộc vòng (Circular dependency)
 
 Key point ở đây là: **Loại bỏ phụ thuộc vòng**
+
 ![enter image description here](https://i.ibb.co/pjBmpdj/circular-dependency.png)
+
 Chúng ta sẽ tạo ra 1 số module trung gian để loại bỏ circular dependency 
 
 ## Architecture pattern lựa chọn cho các thành phần sẽ là gì?
+
 Với mô hình multi-features, mỗi feature là một đơn vị độc lập tách biệt nên nó cần có architecture pattern cho riêng mình, với Android/Flutter hoặc các dòng mobile nói chung mình thiên về sử dụng MVVM vì dự đơn giản & dễ triển khai tận dụng tối đa các component được hỗ trợ sẵn như viewmodel, stateflow..etc
 
 ## Có thể/có nên tạo ra abstraction layer ko?
+
 Abstraction layer là điểm đặc biệt nhất và là keypoint để phân biệt Clean Architecture với các kiến thúc khác. Vậy có thể tạo ra Abstraction layer cho Multi-features được ko?
 Câu trả lời là được, nhưng nó thực sự quá phức tạp triển khai dự án, coding effort trong development phase có thể tăng lên rất nhiều, nên mình đã loại bỏ Abstraction Layer trong kiến trúc này, và chỉ giữ lại UseCase - 'abstraction' phụ trách business logic đặt trong từng feature
 
@@ -118,6 +124,9 @@ Custom plugin sẽ trở thành 1 cái khung/base chương trình cho feature s�
 
 
 ## Sử dụng mix các loại feature truyền thống(fragment/view/binding) và các feature sử dụng Jetpack compose
+
 (TBD)
+
 ## Sử dụng các mix với Dynamic-Features
+
 (TBD) 
