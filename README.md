@@ -18,7 +18,8 @@ Khi đề xuất một architecture mới, chúng ta thường kỳ vọng nó g
  
 ## Việc chuyển đổi/navigate các screen diễn ra thế nào?
 1. **Hạn chế sử dụng Navigation Graph trên xml**
-Tương tự với Navigation Graph trên Android, lập trình viên IOS đã quen thuộc với StoryBoard từ những năm 2011 - 2012, tuy nhiên họ hiếm khi sử dụng full StoryBoard trong những dự án nhiều màn hình và có các screen phức tạp, bởi vì việc add quá nhiều screen lên StoryBoard sẽ khiến Xcode trở lên ì ạch, giảm performance của lập trình viên ngoài ra còn rất khó để control và chỉnh sửa nếu số lượng màn hình quá lớn
+
+Tương tự với Navigation Graph trên Android, lập trình viên IOS đã quen thuộc với StoryBoard từ những năm 2011 - 2012, tuy nhiên họ hiếm khi sử dụng full StoryBoard trong những dự án nhiều màn hình và có các screen phức tạp, bởi vì việc add quá nhiều screen lên StoryBoard sẽ khiến Xcode trở lên ì ạch, giảm performance của lập trình viên ngoài ra còn rất khó để control và chỉnh sửa nếu số lượng màn hình quá lớn.
 Android cũng gặp vấn đề tương tự với Navigation Graph, khi số lượng màn hình add vào Navigation Graph(xml file) quá lớn, Android Studio sẽ trở lên rất chậm 
 ![enter image description here](https://developer.android.com/static/images/topic/libraries/architecture/navigation-graph_2x-callouts.png)
 
