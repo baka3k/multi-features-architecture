@@ -44,6 +44,7 @@ navController.graph = navController.createGraph
 ```
 **2. Sử dụng deep link khi chuyển đổi giữa các screen**
 Với cách sử dụng Navigation component thông thường, để chuyển đổi các screen thì cần biết ID và params gửi đến screen tiếp theo, nhưng với mô hình multi-features, các screen được nằm ở các features khác nhau và hoàn toàn ko biết đến các screen khác nên trường hợp này chúng ta sử dụng **[deeplink](https://developer.android.com/guide/navigation/navigation-deep-link)** để chuyển đổi các màn hình
+
 Khai báo khởi tạo NavGraph & deeplink [(Kotlin DSL)](https://developer.android.com/guide/navigation/navigation-kotlin-dsl)
 ```kotlin
 inline fun NavController.graphScreenMovieDetail(): NavGraph {  
