@@ -2,7 +2,7 @@
 
 Clean Architecture là một cách thức tương đối tuyệt vời để triển khai các dự án, cho đến một ngày mình nhận ra với một số dòng dự án, nó quá phức tạp, tốn kém(về mặt effort cần thiết bỏ ra) khi áp dụng cho các ứng dụng nhiều module, nhiều feature. 
 Khi ứng dụng tăng lên đến 80-90 features/modules hoặc hơn thế nữa chẳng hạn, hãy thực sự nghiêm túc suy nghĩ về vấn đề này.
-Với các ứng dụng ko thiên về business logic, ví dụ như các ứng dụng client server đơn thuần, nhiều screen flow, nhiều feature thêm vào nhiều module cắm thêm.. Clean architecture tuy có lợi cho phase maintain nhưng lại lấy đi tương đối effort  trong phase develop. 
+Với các ứng dụng ko thiên về business logic, ví dụ như các ứng dụng client server đơn thuần, nhiều screen flow, nhiều feature thêm vào nhiều module cắm thêm.. Clean architecture tuy có lợi cho phase maintain nhưng lại lấy đi tương đối effort trong phase development. 
 Và mình cần tìm một giải pháp khác cân bằng hơn, tất nhiên, ko có viên đạn bạc nào, mô hình nào cũng có điểm mạnh và điểm yếu. Chúng ta đơn giản chỉ là lựa chọn thứ phù hợp cho dự án của mình - just only
 
 Có 1 số điểm chúng ta suy nghĩ kỹ, và tìm ra phương án giải quyết trước khi thực sự quyết định dựng lên một high level design hoặc chọn một architecture pattern nào đó
@@ -85,7 +85,7 @@ Với mô hình multi-features, mỗi feature là một đơn vị độc lập 
 
 ## Có thể/có nên tạo ra abstraction layer ko?
 Abstraction layer là điểm đặc biệt nhất và là keypoint để phân biệt Clean Architecture với các kiến thúc khác. Vậy có thể tạo ra Abstraction layer cho Multi-features được ko?
-Câu trả lời là được, nhưng nó thực sự quá phức tạp triển khai dự án, coding effort trong develop phase có thể tăng lên rất nhiều, nên mình đã loại bỏ Abstraction Layer trong kiến trúc này, và chỉ giữ lại UseCase - 'abstraction' phụ trách business logic đặt trong từng feature
+Câu trả lời là được, nhưng nó thực sự quá phức tạp triển khai dự án, coding effort trong development phase có thể tăng lên rất nhiều, nên mình đã loại bỏ Abstraction Layer trong kiến trúc này, và chỉ giữ lại UseCase - 'abstraction' phụ trách business logic đặt trong từng feature
 
 ![enter image description here](https://i.ibb.co/Z6dq7xN/featurecontent.png)
 
