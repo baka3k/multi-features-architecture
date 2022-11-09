@@ -16,3 +16,4 @@
 .cxx
 /.idea/
 /build-logic/
+secrets.defaults.properties
