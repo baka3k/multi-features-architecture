@@ -15,6 +15,8 @@ dependencies {
     implementation(libs.com.google.accompanist.pager)
     implementation(libs.com.google.accompanist.swiperefresh)
     implementation(libs.com.google.accompanist.flowlayout)
+    implementation(project(mapOf("path" to ":data:data:movie")))
+    implementation(project(mapOf("path" to ":data:data:movie")))
 }
 android {
     namespace = "com.baka3k.architecture.feature.movie.detail"

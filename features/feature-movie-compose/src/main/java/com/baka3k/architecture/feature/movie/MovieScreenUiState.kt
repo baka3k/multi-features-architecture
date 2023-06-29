@@ -14,7 +14,8 @@ sealed interface NowPlayingUiState {
     object Loading : NowPlayingUiState
 }
 
-data class MovieScreenUiState(
-    val nowPlayingUiState: NowPlayingUiState,
-    val popularUiState: PopularUiState
-)
+sealed interface UpComingUiState {
+    data class Success(val movies: List<Movie>) : UpComingUiState
+    object Error : UpComingUiState
+    object Loading : UpComingUiState
+}

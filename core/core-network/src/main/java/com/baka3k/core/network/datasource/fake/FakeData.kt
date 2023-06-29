@@ -1,7 +1,6 @@
 package com.baka3k.core.network.datasource.fake
 
 import com.baka3k.core.model.NewsResourceType
-import com.baka3k.core.network.model.NetworkMovie
 import com.baka3k.core.network.model.NetworkNewsResource
 import com.baka3k.core.network.model.NetworkTopic
 import kotlinx.datetime.LocalDateTime
@@ -12,14 +11,6 @@ import org.intellij.lang.annotations.Language
 /* ktlint-disable max-line-length */
 
 object FakeData {
-    val sampleMovie = NetworkMovie(
-        id = 2,
-        adult = false,
-        voteAverage = 8.1,
-        title = "Stay up to date with the latest events and announcements from Android!",
-        originalTitle = "",
-        backdropPath = "https://firebasestorage.googleapis.com/v0/b/now-in-android.appspot.com/o/img%2Fic_topic_Headlines.svg?alt=media&token=506faab0-617a-4668-9e63-4a2fb996603f"
-    )
     val sampleTopic = NetworkTopic(
         id = "2",
         name = "Headlines",

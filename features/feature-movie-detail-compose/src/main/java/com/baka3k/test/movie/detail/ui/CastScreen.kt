@@ -1,5 +1,6 @@
 package com.baka3k.test.movie.detail.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,8 +32,10 @@ import com.baka3k.core.model.Cast
 import com.baka3k.test.movie.detail.CastUiState
 
 @Composable
-fun castScreen(
-    castUiState: CastUiState, modifier: Modifier = Modifier
+fun CastScreen(
+    castUiState: CastUiState,
+    modifier: Modifier = Modifier,
+    onItemCastClicked: (Long) -> Unit
 ) {
     when (castUiState) {
         is CastUiState.Loading -> {
@@ -42,15 +45,20 @@ fun castScreen(
             Logger.d("test", " castUiState Err")
         }
         is CastUiState.Success -> {
-            castUi(castUiState.casts.filter { it.profilePath.isNotEmpty() }, modifier)
+            CastUi(
+                casts = castUiState.casts.filter { it.profilePath.isNotEmpty() },
+                modifier = modifier,
+                onItemCastClicked = onItemCastClicked
+            )
         }
 
     }
 }
 
 @Composable
-private fun castUi(
-    casts: List<Cast>, modifier: Modifier
+private fun CastUi(
+    casts: List<Cast>, modifier: Modifier,
+    onItemCastClicked: (Long) -> Unit
 ) {
     val itemWidth = (LocalConfiguration.current.screenWidthDp.dp - 30.dp) / 4
     val numRow = if (casts.size > 6) {
@@ -59,7 +67,7 @@ private fun castUi(
         1
     }
     val itemHeight = itemWidth * numRow
-    cardCast(
+    CardCast(
         modifier = modifier.padding(
             start = 15.dp,
             end = 15.dp,
@@ -72,14 +80,19 @@ private fun castUi(
             items(
                 casts,
                 itemContent = { item: Cast ->
-                    avatarCast(modifier, itemWidth, item)
+                    AvatarCast(
+                        modifier = modifier,
+                        itemWidth = itemWidth,
+                        item = item,
+                        onItemCastClicked = onItemCastClicked
+                    )
                 })
         }
     }
 }
 
 @Composable
-fun cardCast(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
+fun CardCast(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -110,15 +123,19 @@ fun cardCast(modifier: Modifier = Modifier, content: @Composable ColumnScope.() 
 }
 
 @Composable
-private fun avatarCast(
+private fun AvatarCast(
     modifier: Modifier,
     itemWidth: Dp,
-    item: Cast
+    item: Cast,
+    onItemCastClicked: (Long) -> Unit
 ) {
     ConstraintLayout(
         modifier = modifier
             .width(itemWidth)
             .height(itemWidth)
+            .clickable {
+                onItemCastClicked.invoke(item.id)
+            }
     ) {
         val (photo, info) = createRefs()
         AsyncImageView(data = item.profilePath.asPhotoUrl(PhotoSize.Profile.w185),

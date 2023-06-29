@@ -12,20 +12,20 @@ import androidx.room.Index
 @Entity(
     tableName = "movie_type",
     primaryKeys = ["movie_id", "type_id"],
-    foreignKeys = [
-        ForeignKey(
-            entity = MovieEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["movie_id"],
-            onDelete = ForeignKey.CASCADE
-        ),
-        ForeignKey(
-            entity = TypeEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["type_id"],
-            onDelete = ForeignKey.CASCADE
-        ),
-    ],
+//    foreignKeys = [
+//        ForeignKey(
+//            entity = MovieEntity::class,
+//            parentColumns = ["id"],
+//            childColumns = ["movie_id"],
+//            onDelete = ForeignKey.CASCADE
+//        ),
+//        ForeignKey(
+//            entity = TypeEntity::class,
+//            parentColumns = ["id"],
+//            childColumns = ["type_id"],
+//            onDelete = ForeignKey.CASCADE
+//        ),
+//    ],
     indices = [
         Index(value = ["movie_id"]),
         Index(value = ["type_id"]),

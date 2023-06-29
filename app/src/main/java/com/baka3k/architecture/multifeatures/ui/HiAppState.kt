@@ -1,5 +1,7 @@
 package com.baka3k.architecture.multifeatures.ui
 
+import android.net.Uri
+import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
@@ -21,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.util.trace
+import androidx.core.net.toUri
 import androidx.metrics.performance.PerformanceMetricsState
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -33,6 +36,7 @@ import com.baka3k.architecture.feature.movie.navigation.MovieDestination
 import com.baka3k.architecture.multifeatures.R
 import com.baka3k.architecture.multifeatures.navigation.TopLevelDestination
 import com.baka3k.core.navigation.Screen
+import com.baka3k.test.movie.detail.navigation.MovieDetailDestination
 
 @Composable
 fun rememberHiAppState(
@@ -113,6 +117,17 @@ class HiAppState(
             }
         }
     }
+
+//    fun navigate(destination: Screen, deepLink: Uri? = null) {
+//        trace("Navigation: $destination") {
+//            val target = deepLink ?: destination.deepLinkUrl.toUri()
+//            if (destination is TopLevelDestination) {
+//                navController.navigate(target)
+//            } else {
+//                navController.navigate(target)
+//            }
+//        }
+//    }
 
     fun onBackPress() {
         navController.popBackStack()

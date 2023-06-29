@@ -18,6 +18,14 @@ dependencies {
 
 gradlePlugin {
     plugins {
+        register("androidLibraryNetwork") {
+            id = "hi.android.library.network"
+            implementationClass = "AndroidLibraryNetworkConventionPlugin"
+        }
+        register("androidLibraryDataBase") {
+            id = "hi.android.library.database"
+            implementationClass = "AndroidLibraryDataBaseConventionPlugin"
+        }
         register("androidApplicationCompose") {
             id = "hi.android.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"

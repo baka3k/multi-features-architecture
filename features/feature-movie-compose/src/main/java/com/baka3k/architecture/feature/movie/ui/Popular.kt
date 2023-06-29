@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -52,7 +54,7 @@ fun popularMovieView(
                 bottom = 10.dp
             )
             .fillMaxWidth()
-            .fillMaxHeight()
+            .wrapContentHeight()
             .shadow(
                 elevation = 15.dp,
                 shape = RoundedCornerShape(
@@ -67,7 +69,6 @@ fun popularMovieView(
             ),
         elevation = CardDefaults.elevatedCardElevation(),
         shape = RoundedCornerShape(
-
             bottomEnd = 7.dp,
             bottomStart = 7.dp
         ),
@@ -80,7 +81,7 @@ fun popularMovieView(
                 text = "Travel, Tours and Tracking",
                 style = LocalTextStyle.current.copy(AppTheme.colors.colorContentEditText)
             )
-            popularItem(
+            popularItems(
                 navigateToMovieDetail = navigateToMovieDetail,
                 popularUiState = popularUiState,
                 modifier = modifier
@@ -89,9 +90,8 @@ fun popularMovieView(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun popularItem(
+private fun popularItems(
     navigateToMovieDetail: (Long) -> Unit,
     popularUiState: PopularUiState,
     modifier: Modifier = Modifier
@@ -99,43 +99,55 @@ private fun popularItem(
 
     when (popularUiState) {
         PopularUiState.Loading -> {
-//            ShimmerList()
             ShimmerAnimation()
         }
         PopularUiState.Error -> {
             Text(text = "$popularUiState")
         }
         is PopularUiState.Success -> {
-            LazyHorizontalStaggeredGrid(rows = StaggeredGridCells.Adaptive(100.dp)) {
-                items(popularUiState.movies) { movie ->
-                    Box(modifier = modifier
-                        .fillMaxWidth()
-                        .aspectRatio(
-                            ratio = Random
-                                .nextDouble(0.7, 1.8)
-                                .toFloat()
-                        )
-                        .clickable {
-                            Logger.d("#popularItem() ${movie.title}")
-                            navigateToMovieDetail(movie.id)
-                        },
-                        content = {
-                            AsyncImage(
-                                modifier = modifier
-                                    .fillMaxWidth()
-                                    .fillMaxHeight()
-                                    .background(Color.Blue),
-                                contentScale = ContentScale.Crop,
-                                model = ImageRequest.Builder(LocalContext.current)
-                                    .placeholder(R.drawable.placeholder)
-                                    .data(movie.backdropPath.asPhotoUrl(PhotoSize.BackDrop.w300))
-                                    .diskCachePolicy(CachePolicy.ENABLED).build(),
-                                contentDescription = movie.title,
-                            )
-                        }
+            horizontalPopular(popularUiState, modifier, navigateToMovieDetail)
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun horizontalPopular(
+    popularUiState: PopularUiState.Success,
+    modifier: Modifier,
+    navigateToMovieDetail: (Long) -> Unit
+) {
+    LazyHorizontalStaggeredGrid(
+        rows = StaggeredGridCells.Adaptive(100.dp),
+        modifier = Modifier.height(220.dp)
+    ) {
+        items(popularUiState.movies) { movie ->
+            Box(modifier = modifier
+                .fillMaxWidth()
+                .aspectRatio(
+                    ratio = Random
+                        .nextDouble(0.7, 1.8)
+                        .toFloat()
+                )
+                .clickable {
+                    Logger.d("#popularItem() ${movie.title}")
+                    navigateToMovieDetail(movie.id)
+                },
+                content = {
+                    AsyncImage(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .background(Color.Blue),
+                        contentScale = ContentScale.Crop,
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .placeholder(R.drawable.placeholder)
+                            .data(movie.backdropPath.asPhotoUrl(PhotoSize.BackDrop.w300))
+                            .diskCachePolicy(CachePolicy.ENABLED).build(),
+                        contentDescription = movie.title,
                     )
                 }
-            }
+            )
         }
     }
 }

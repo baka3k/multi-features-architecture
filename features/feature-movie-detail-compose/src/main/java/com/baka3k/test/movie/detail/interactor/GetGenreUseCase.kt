@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetGenreUseCase @Inject constructor(
+    private val genreRepository: GenreRepository
 ) : UpStreamSingleUseCaseParameter<Long, Flow<Result<List<Genre>>>> {
-    @Inject
-    lateinit var genreRepository: GenreRepository
     override fun invoke(idMovie: Long): Flow<Result<List<Genre>>> {
         return genreRepository.getGenres(idMovie).asResult()
     }

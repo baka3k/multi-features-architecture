@@ -9,7 +9,7 @@ androidxCustomView = "1.0.0-beta02"
 androidxDataStore = "1.0.0"
 androidxEspresso = "3.4.0"
 androidxHiltNavigationCompose = "1.0.0"
-androidxLifecycle = "2.5.1"
+androidxLifecycle = "2.6.0-alpha02"
 androidxMacroBenchmark = "1.1.0-rc03"
 androidxNavigation = "2.5.2"
 androidxProfileinstaller = "1.2.0-beta03"
@@ -25,11 +25,11 @@ hilt = "2.42"
 hiltExt = "1.0.0"
 jacoco = "0.8.7"
 junit4 = "4.13.2"
-kotlin = "1.6.21"
-kotlinxCoroutines = "1.6.2"
-kotlinxDatetime = "0.3.3"
-kotlinxSerializationJson = "1.3.3"
-ksp = "1.6.21-1.0.5"
+kotlin = "1.7.20"
+kotlinxCoroutines = "1.6.4"
+kotlinxDatetime = "0.4.0"
+kotlinxSerializationJson = "1.4.1"
+ksp = "1.7.22-1.0.8"
 ktlint = "0.43.0"
 material3 = "1.6.1"
 okhttp = "4.9.3"
@@ -54,7 +54,7 @@ navigationSafeargs = "2.5.1"
 navigationDynamicFeatureFragment = "2.5.1"
 
 androidxCompose = "1.2.0-beta03"
-androidxComposeCompiler = "1.3.1"
+androidxComposeCompiler = "1.3.2"
 androidxComposeMaterial3 = "1.0.0-beta03"
 compose-runtime = "1.3.0-beta03"
 compose-runtime-livedata  = "1.3.0-beta03"
@@ -72,6 +72,7 @@ accompanist-swiperefresh = "0.26.4-beta"
 accompanist-flowlayout = "0.27.0"
 androidxMetrics = "1.0.0-alpha03"
 androidxTracing = "1.1.0"
+accompanist-navigation-animation = "0.27.1"
 [libraries]
 
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "androidx-compose-foundation" }
@@ -85,6 +86,7 @@ androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util", ve
 androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "androidx-compose-ui-test" }
 androidx-compose-ui-testManifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "androidx-compose-ui-testManifest" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "androidx-compose-ui-graphics" }
+androidx-compose-compiler = { group = "androidx.compose.compiler", name = "compiler", version.ref = "androidxComposeCompiler" }
 androidx-metrics = { group = "androidx.metrics", name = "metrics-performance", version.ref = "androidxMetrics" }
 androidx-tracing-ktx = {group = "androidx.tracing", name="tracing-ktx", version.ref = "androidxTracing" }
 
@@ -92,6 +94,7 @@ androidx-tracing-ktx = {group = "androidx.tracing", name="tracing-ktx", version.
 com-google-accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist-pager" }
 com-google-accompanist-swiperefresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanist-swiperefresh" }
 com-google-accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist-flowlayout" }
+com-google-accompanist-navigation-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist-navigation-animation" }
 
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "androidxComposeMaterial3" }
 androidx-compose-material3-windowSizeClass = {group = "androidx.compose.material3", name = "material3-window-size-class", version.ref="androidxComposeMaterial3"}
@@ -121,6 +124,7 @@ androidx-customview-poolingcontainer = { group = "androidx.customview", name = "
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
 androidx-dataStore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDataStore" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
+androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
 androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "androidxProfileinstaller" }

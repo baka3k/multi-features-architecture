@@ -17,8 +17,6 @@ dependencies {
     implementation(project(":core:core-common"))
     implementation(project(":core:core-model"))
 
-//    testImplementation(project(":core-testing"))
-
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.datetime)
@@ -28,6 +26,7 @@ dependencies {
     implementation(libs.retrofit.kotlin.serialization)
 
     implementation(libs.hilt.android)
+
     kapt(libs.hilt.compiler)
 }
 android {

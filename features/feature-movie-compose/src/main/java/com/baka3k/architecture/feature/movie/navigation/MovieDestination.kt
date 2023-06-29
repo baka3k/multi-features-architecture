@@ -15,11 +15,15 @@ object MovieDestination : Screen {
 }
 
 fun NavGraphBuilder.movieScreenComposeGraph(
-    navigateToMovieDetail: (Long) -> Unit
+    navigateToMovieDetail: (Long) -> Unit,
+    navigateToSearchMovie: (String) -> Unit,
 ) {
     composable(
         route = MovieDestination.startScreen
     ) {
-        MovieRoute(navigateToMovieDetail = navigateToMovieDetail)
+        MovieRoute(
+            navigateToMovieDetail = navigateToMovieDetail,
+            navigateToSearchMovie = navigateToSearchMovie
+        )
     }
 }

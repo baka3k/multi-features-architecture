@@ -3,6 +3,7 @@ package com.baka3k.architecture.core.ui.component
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
@@ -16,7 +17,8 @@ fun AsyncImageView(
     contentScale: ContentScale = ContentScale.Fit,
     @DrawableRes placeholderDrawableResId: Int = R.drawable.placeholder,
     @DrawableRes errorDrawableResId: Int = R.drawable.placeholder,
-    data: Any?
+    data: Any?,
+    colorFilter: ColorFilter? = null,
 ) {
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
@@ -28,5 +30,6 @@ fun AsyncImageView(
         contentDescription = "",
         modifier = modifier,
         contentScale = contentScale,
+        colorFilter = colorFilter
     )
 }

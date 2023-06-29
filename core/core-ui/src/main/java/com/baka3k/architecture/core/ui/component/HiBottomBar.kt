@@ -1,11 +1,6 @@
 package com.baka3k.architecture.core.ui.component
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Message
-import androidx.compose.material.icons.filled.Stream
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationRailItem
@@ -13,7 +8,6 @@ import androidx.compose.material3.NavigationRailItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -69,43 +63,4 @@ object NavigationDefaults {
 
     @Composable
     fun navigationIndicatorColor() = MaterialTheme.colorScheme.primaryContainer
-}
-
-//@Composable
-//fun HiBottomBar(navController: NavController) {
-//    val navBackStackEntry by navController.currentBackStackEntryAsState()
-//    val currentRoute = navBackStackEntry?.destination?.route
-//
-//    val items = listOf(
-//        NavigationItem.Home, NavigationItem.Music, NavigationItem.Movies, NavigationItem.Profile
-//    )
-//    Surface(color = AppTheme.colors.colorBackgroundTheme) {
-//        NavigationBar(containerColor = Color.Transparent) {
-//            items.forEach { destination ->
-//                NavigationBarItem(selected = false, onClick = {
-//
-//                }, icon = {
-//                    Icon(
-//                        imageVector = destination.icon,
-//                        contentDescription = "",
-//                        modifier = Modifier.padding(start = 5.dp),
-//                        tint = AppTheme.colors.colorContentEditText
-//                    )
-//                }, label = {
-//                    Text(
-//                        destination.title,
-//                        style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp)
-//                    )
-//                })
-//            }
-//        }
-//    }
-//
-//}
-
-sealed class NavigationItem(var route: String, var icon: ImageVector, var title: String) {
-    object Home : NavigationItem("home", Icons.Default.Home, "Home")
-    object Music : NavigationItem("music", Icons.Default.Stream, "Streams")
-    object Movies : NavigationItem("movies", Icons.Default.Message, "Message")
-    object Profile : NavigationItem("profile", Icons.Default.AccountCircle, "Profile")
 }

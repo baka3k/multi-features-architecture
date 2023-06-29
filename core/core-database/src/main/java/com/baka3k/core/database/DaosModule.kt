@@ -3,10 +3,12 @@ package com.baka3k.core.database
 import com.baka3k.core.database.dao.CastDao
 import com.baka3k.core.database.dao.CrewDao
 import com.baka3k.core.database.dao.GenreDao
-import com.baka3k.core.database.dao.MovieDao
-import com.baka3k.core.database.dao.MovieGenreDao
-import com.baka3k.core.database.dao.MovieTypeDao
-import com.baka3k.core.database.dao.TypeDao
+import com.baka3k.core.database.dao.PersonDao
+import com.baka3k.core.database.dao.ReviewDao
+import com.baka3k.data.movie.database.dao.MovieDao
+import com.baka3k.data.movie.database.dao.MovieGenreDao
+import com.baka3k.data.movie.database.dao.MovieTypeDao
+import com.baka3k.data.movie.database.dao.TypeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,4 +51,14 @@ object DaosModule {
     fun providesMovieGenreDao(
         database: HiDatabase,
     ): MovieGenreDao = database.movieGenreDao()
+
+    @Provides
+    fun providesPersonDao(
+        database: HiDatabase,
+    ): PersonDao = database.personDao()
+
+    @Provides
+    fun providesReviewDao(
+        database: HiDatabase,
+    ): ReviewDao = database.reviewDao()
 }

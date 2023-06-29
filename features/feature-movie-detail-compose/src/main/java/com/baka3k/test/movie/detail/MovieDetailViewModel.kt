@@ -3,6 +3,8 @@ package com.baka3k.test.movie.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.baka3k.core.common.Dispatcher
+import com.baka3k.core.common.HiDispatchers
 import com.baka3k.core.common.logger.Logger
 import com.baka3k.core.common.result.Result
 import com.baka3k.test.movie.detail.interactor.GetCastUseCase
@@ -10,13 +12,13 @@ import com.baka3k.test.movie.detail.interactor.GetCreditUseCase
 import com.baka3k.test.movie.detail.interactor.GetCrewUseCase
 import com.baka3k.test.movie.detail.interactor.GetGenreUseCase
 import com.baka3k.test.movie.detail.interactor.GetMovieDetailUseCase
+import com.baka3k.test.movie.detail.interactor.GetMovieReviewUseCase
 import com.baka3k.test.movie.detail.navigation.MovieDetailDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -30,18 +32,20 @@ class MovieDetailViewModel @Inject constructor(
     crewUseCase: GetCrewUseCase,
     castUseCase: GetCastUseCase,
     getGenreUseCase: GetGenreUseCase,
-    private val getCreditUseCase: GetCreditUseCase
-
+    private val getMovieReviewUseCase: GetMovieReviewUseCase,
+    private val getCreditUseCase: GetCreditUseCase,
+    @Dispatcher(HiDispatchers.SERIAL) private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _movieId: String = checkNotNull(
         savedStateHandle[MovieDetailDestination.movieIdArg]
     )
     private val movieId = _movieId.toLong()
-    private val movieDetailStream = movieDetailUseCase.invoke(movieId).flowOn(Dispatchers.IO)
-    private val genreStream = getGenreUseCase.invoke(movieId).flowOn(Dispatchers.IO)
-    private val castStream = castUseCase.invoke(movieId).flowOn(Dispatchers.IO)
-    private val crewStream = crewUseCase.invoke(movieId).flowOn(Dispatchers.IO)
-    private val creditStream = loadCredit(movieId).flowOn(Dispatchers.IO)
+    private val movieDetailStream = movieDetailUseCase.invoke(movieId)
+    private val genreStream = getGenreUseCase.invoke(movieId)
+    private val castStream = castUseCase(movieId)
+    private val crewStream = crewUseCase.invoke(movieId)
+    private val reviewStream = getMovieReviewUseCase.invoke(movieId)
+    private val creditStream = pullCreditFromNetwork(movieId)
     val creditUiState: StateFlow<CreditUiState> = combine(
         creditStream, castStream, crewStream
     ) { creditResult, castResult, crewResult ->
@@ -50,7 +54,6 @@ class MovieDetailViewModel @Inject constructor(
                 CreditUiState(crewUiState = CrewUiState.Loading, castUiState = CastUiState.Loading)
             }
             is Result.Error -> {
-                Logger.d("test", "creditResult err $creditResult")
                 CreditUiState(crewUiState = CrewUiState.Error, castUiState = CastUiState.Error)
             }
             else -> {
@@ -79,9 +82,19 @@ class MovieDetailViewModel @Inject constructor(
         )
     )
     val movieDetailUiState =
-        combine(movieDetailStream, genreStream) { movieDetailResult, genreResult ->
+        combine(
+            movieDetailStream,
+            genreStream,
+            pullReviewFromNetwork(movieId),
+            reviewStream
+        ) { movieDetailResult, genreResult, reviewNetworkResult, reviewDBResult ->
             val genreList = if (genreResult is Result.Success) {
                 genreResult.data
+            } else {
+                emptyList()
+            }
+            val reviews = if (reviewDBResult is Result.Success) {
+                reviewDBResult.data
             } else {
                 emptyList()
             }
@@ -89,7 +102,7 @@ class MovieDetailViewModel @Inject constructor(
                 is Result.Success -> {
                     val data = movieDetailResult.data
                     data.genres.addAll(genreList)
-                    MovieDetailUiState.Success(data)
+                    MovieDetailUiState.Success(data, reviews)
                 }
                 is Result.Loading -> {
                     MovieDetailUiState.Loading
@@ -104,10 +117,19 @@ class MovieDetailViewModel @Inject constructor(
             initialValue = MovieDetailUiState.Loading
         )
 
-    private fun loadCredit(movieId: Long): Flow<Result<Int>> {
+    private fun pullCreditFromNetwork(movieId: Long): Flow<Result<Int>> {
         return flow {
             val data = getCreditUseCase.invoke(movieId)
             emit(data)
-        }
+        }.flowOn(ioDispatcher)
+    }
+
+    private fun pullReviewFromNetwork(movieId: Long): Flow<Result<Int>> {
+        Logger.d("pullReviewFromNetwork  ${movieId}")
+        return flow {
+            val data = getMovieReviewUseCase.pullReviewFromNetwork(movieId)
+
+            emit(data)
+        }.flowOn(ioDispatcher)
     }
 }

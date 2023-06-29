@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
-import com.baka3k.core.common.network.Dispatcher
-import com.baka3k.core.common.network.HiDispatchers
-//import com.baka3k.core.common.network.Dispatcher
-//import com.baka3k.core.common.network.HiDispatchers
+import com.baka3k.core.common.Dispatcher
+import com.baka3k.core.common.HiDispatchers
+//import com.baka3k.core.common.Dispatcher
+//import com.baka3k.core.common.HiDispatchers
 import com.baka3k.core.datastore.IntToStringIdsMigration
 import com.baka3k.core.datastore.UserPreferences
 import com.baka3k.core.datastore.UserPreferencesSerializer

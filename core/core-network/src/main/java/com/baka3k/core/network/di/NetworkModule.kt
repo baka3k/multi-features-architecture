@@ -2,7 +2,8 @@ package com.baka3k.core.network.di
 
 import com.baka3k.core.network.datasource.CreditNetworkDataSource
 import com.baka3k.core.network.datasource.GenreNetworkDataSource
-import com.baka3k.core.network.datasource.MovieNetworkDataSource
+import com.baka3k.core.network.datasource.PersonNetworkDataSource
+import com.baka3k.core.network.datasource.ReviewNetworkDataSource
 import com.baka3k.core.network.datasource.retrofit.movie.RetrofitMovieNetworkDataSource
 import dagger.Binds
 import dagger.Module
@@ -18,12 +19,6 @@ import javax.inject.Singleton
 interface NetworkModule {
 
     @Binds
-    fun bindsNiaNetwork(
-//        niANetwork: FakeNiaNetworkDataSource
-        niANetwork: RetrofitMovieNetworkDataSource
-    ): MovieNetworkDataSource
-
-    @Binds
     fun bindsCreditNetwork(
         creditNetworkDataSource: RetrofitMovieNetworkDataSource
     ): CreditNetworkDataSource
@@ -32,6 +27,16 @@ interface NetworkModule {
     fun bindsGenreNetwork(
         creditNetworkDataSource: RetrofitMovieNetworkDataSource
     ): GenreNetworkDataSource
+
+    @Binds
+    fun bindsPersonNetwork(
+        creditNetworkDataSource: RetrofitMovieNetworkDataSource
+    ): PersonNetworkDataSource
+
+    @Binds
+    fun bindsReviewNetwork(
+        reviewNetworkDataSource: RetrofitMovieNetworkDataSource
+    ): ReviewNetworkDataSource
 
     companion object {
         @Provides

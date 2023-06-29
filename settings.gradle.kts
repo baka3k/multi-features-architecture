@@ -24,6 +24,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MultiFeatureApp"
 include(":app")
+
+include(":sync")
 //include(":core-ui")
 include(":core:core-navigation")
 include(":core:core-data")
@@ -38,6 +40,9 @@ include(":features:feature-movie-compose")
 include(":features:feature-movie-detail-compose")
 include(":features:feature-movie")
 include(":features:feature-moviedetail")
-
-include(":sync")
-
+include(":features:feature-person")
+include(":features:feature-movies-list-compose")
+// data for feature
+include(":data:network:movie")
+include(":data:database:movie")
+include(":data:data:movie")

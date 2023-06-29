@@ -68,11 +68,12 @@ fun HiComposeApp(
             ) { padding ->
                 Column {
                     HiNavHost(
-                        windowSizeClass = windowSizeClass,
                         navController = navController,
                         modifier = Modifier
                             .padding(padding)
-                            .consumedWindowInsets(padding), onBackPress = appState::onBackPress
+                            .consumedWindowInsets(padding),
+                        onNavigateToScreen = appState::navigate,
+                        onBackPress = appState::onBackPress
                     )
                 }
             }

@@ -14,6 +14,7 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hilt.android)
+    implementation(project(mapOf("path" to ":data:data:movie")))
     kapt(libs.hilt.compiler)
     kapt(libs.hilt.ext.compiler)
 

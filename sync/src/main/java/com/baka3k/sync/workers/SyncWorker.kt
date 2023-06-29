@@ -14,14 +14,16 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkerParameters
-import com.baka3k.core.common.network.Dispatcher
-import com.baka3k.core.common.network.HiDispatchers
-import com.baka3k.core.data.Synchronizer
+import com.baka3k.core.common.Dispatcher
+import com.baka3k.core.common.HiDispatchers
+import com.baka3k.core.common.data.Synchronizer
 import com.baka3k.core.data.movie.repository.GenreRepository
-import com.baka3k.core.data.movie.repository.MovieRepository
-import com.baka3k.core.data.movie.repository.MovieTypeRepository
 import com.baka3k.core.datastore.ChangeListVersions
 import com.baka3k.core.datastore.HiPreferencesDataSource
+import com.baka3k.data.movie.MovieRepository
+import com.baka3k.data.movie.MovieTypeRepository
+import com.baka3k.sync.R
+
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -38,26 +40,26 @@ private const val SyncNotificationChannelID = "SyncNotificationChannel"
  */
 private fun Context.syncWorkNotification(): Notification {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//        val channel = NotificationChannel(
-//            SyncNotificationChannelID,
-//            getString(R.string.sync_notification_channel_name),
-//            NotificationManager.IMPORTANCE_DEFAULT
-//        ).apply {
-//            description = getString(R.string.sync_notification_channel_description)
-//        }
-//        // Register the channel with the system
-//        val notificationManager: NotificationManager? =
-//            getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
-//
-//        notificationManager?.createNotificationChannel(channel)
+        val channel = NotificationChannel(
+            SyncNotificationChannelID,
+            getString(R.string.sync_notification_channel_name),
+            NotificationManager.IMPORTANCE_DEFAULT
+        ).apply {
+            description = getString(R.string.sync_notification_channel_description)
+        }
+        // Register the channel with the system
+        val notificationManager: NotificationManager? =
+            getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+
+        notificationManager?.createNotificationChannel(channel)
     }
 
     return NotificationCompat.Builder(
         this,
         SyncNotificationChannelID
     )
-//        .setSmallIcon(R.drawable.ic_nia_notification)
-//        .setContentTitle(getString(R.string.sync_notification_title))
+        .setSmallIcon(R.drawable.ic_nia_notification)
+        .setContentTitle(getString(R.string.sync_notification_title))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         .build()
 }
@@ -94,7 +96,7 @@ class SyncWorker @AssistedInject constructor(
     override suspend fun doWork(): Result = withContext(ioDispatcher) {
         val syncedSuccessfully = awaitAll(
             async {
-                movieTypeRepository.sync()
+//                movieTypeRepository.sync()
                 genreRepository.sync()
             },
         ).all { it }
@@ -119,13 +121,5 @@ class SyncWorker @AssistedInject constructor(
             .setConstraints(SyncConstraints)
             .setInputData(SyncWorker::class.delegatedData())
             .build()
-    }
-
-    override suspend fun getChangeListVersions(): ChangeListVersions {
-        return hiPreferences.getChangeListVersions()
-    }
-
-    override suspend fun updateChangeListVersions(update: ChangeListVersions.() -> ChangeListVersions) {
-        hiPreferences.updateChangeListVersion(update)
     }
 }

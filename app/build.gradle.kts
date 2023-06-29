@@ -1,5 +1,5 @@
-import com.baka3k.build.FlavorDimension
 import com.baka3k.build.Flavor
+import com.baka3k.build.FlavorDimension
 
 plugins {
     id("hi.android.application")
@@ -96,16 +96,9 @@ dependencies {
     implementation(project(path = ":features:feature-movie-detail-compose"))
     implementation(project(path = ":features:feature-movie"))
     implementation(project(path = ":features:feature-moviedetail"))
+    implementation(project(path = ":features:feature-person"))
+    implementation(project(path = ":features:feature-movies-list-compose"))
     implementation(project(path = ":sync"))
-
-//    implementation(project(path = ":core-ui"))
-//    implementation(project(path = ":core-navigation"))
-//    implementation(project(path = ":feature-foryou"))
-//    implementation(project(path = ":feature-interests"))
-//    implementation(project(path = ":feature-topic"))
-//    implementation(project(path = ":feature-author"))
-//    implementation(project(path = ":feature-movies"))
-//    implementation(project(path = ":sync"))
 
     implementation(libs.androidx.window.manager)
     implementation(libs.androidx.compose.material3.windowSizeClass)

@@ -18,7 +18,7 @@ class MovieDetailViewModel @Inject constructor(
     movieDetailUseCase: GetMovieDetailUseCase
 ) : ViewModel() {
     private val movieId: Long = checkNotNull(savedStateHandle["idmovie"])
-    val movieDetailUIState = movieDetailUseCase.invoke(movieId).map {
+    val movieDetailUIState = movieDetailUseCase(movieId).map {
         when (it) {
             is Result.Success -> {
                 MovieDetailUiState.Success(it.data)

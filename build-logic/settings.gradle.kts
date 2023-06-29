@@ -1,4 +1,4 @@
-enableFeaturePreview("VERSION_CATALOGS")
+//enableFeaturePreview("VERSION_CATALOGS") // using for Android Studio Dolphin or lower
 //enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 dependencyResolutionManagement {
     repositories {

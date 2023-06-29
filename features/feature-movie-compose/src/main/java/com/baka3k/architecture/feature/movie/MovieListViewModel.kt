@@ -4,15 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.baka3k.architecture.feature.movie.interactor.GetMovieNowPlayingUseCase
 import com.baka3k.architecture.feature.movie.interactor.GetMoviePopularUseCase
+import com.baka3k.architecture.feature.movie.interactor.GetMovieUpComingUseCase
 import com.baka3k.core.common.result.Result
-import com.baka3k.core.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,12 +17,15 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
     private val moviePopularUseCase: GetMoviePopularUseCase,
-    private val movieNowPlayingUseCase: GetMovieNowPlayingUseCase
+    private val movieNowPlayingUseCase: GetMovieNowPlayingUseCase,
+    private val upComingUseCase: GetMovieUpComingUseCase,
 ) : ViewModel() {
     private val _isLoadingNowPlaying = MutableStateFlow(false)
-    private val _isLoadingPolular = MutableStateFlow(false)
-    private val nowPlayingStream = movieNowPlayingUseCase.invoke().flowOn(Dispatchers.IO)
-    private val popularStream = moviePopularUseCase.invoke().flowOn(Dispatchers.IO)
+    private val _isLoadingPopular = MutableStateFlow(false)
+    private val _isLoadingUpComing = MutableStateFlow(false)
+    private val nowPlayingStream = movieNowPlayingUseCase.invoke()
+    private val popularStream = moviePopularUseCase.invoke()
+    private val upCommingStream = upComingUseCase.invoke()
     val nowPlayingUiState =
         combine(nowPlayingStream, _isLoadingNowPlaying) { nowPlayingResult, isLoading ->
             if (isLoading) {
@@ -45,7 +45,7 @@ class MovieListViewModel @Inject constructor(
             initialValue = NowPlayingUiState.Loading
         )
     val popularUiState =
-        combine(popularStream, _isLoadingPolular) { popularMoviesResult, isLoading ->
+        combine(popularStream, _isLoadingPopular) { popularMoviesResult, isLoading ->
             if (isLoading) {
                 PopularUiState.Loading
             } else {
@@ -63,40 +63,47 @@ class MovieListViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = PopularUiState.Loading
         )
+    val upComingUiState =
+        combine(upCommingStream, _isLoadingUpComing) { upComingResult, isLoading ->
+            if (isLoading) {
+                UpComingUiState.Loading
+            } else {
+                val upComingMovieState: UpComingUiState = when (upComingResult) {
+                    is Result.Success -> {
+                        UpComingUiState.Success(upComingResult.data)
+                    }
+                    is Result.Loading -> UpComingUiState.Loading
+                    is Result.Error -> UpComingUiState.Error
+                }
+                upComingMovieState
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = UpComingUiState.Loading
+        )
 
     init {
         loadData()
     }
 
     private fun loadData() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             launch {
                 _isLoadingNowPlaying.value = true
                 movieNowPlayingUseCase.loadMore()
                 _isLoadingNowPlaying.value = false
             }
-
             launch {
-                _isLoadingPolular.value = true
+                _isLoadingPopular.value = true
                 moviePopularUseCase.loadMore()
-                _isLoadingPolular.value = false
+                _isLoadingPopular.value = false
             }
-        }
-    }
-
-    fun loadMoreNowPlaying() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _isLoadingNowPlaying.value = true
-            movieNowPlayingUseCase.loadMore()
-            _isLoadingNowPlaying.value = false
-        }
-    }
-
-    fun loadMorePopular() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _isLoadingPolular.value = true
-            moviePopularUseCase.loadMore()
-            _isLoadingPolular.value = false
+            launch {
+                _isLoadingUpComing.value = true
+                upComingUseCase.loadMore()
+                _isLoadingUpComing.value = false
+            }
         }
     }
 }

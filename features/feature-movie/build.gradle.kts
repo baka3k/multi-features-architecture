@@ -20,5 +20,6 @@ dependencies {
     implementation(libs.androidx.navigation.dynamic.feature.fragment)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    implementation(project(mapOf("path" to ":data:data:movie")))
 
 }
